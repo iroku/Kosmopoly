@@ -1,0 +1,9 @@
+﻿  Kosmopoly.cpp
+c:\users\łukasz zieliński\desktop\studia\programowanie 2\kosmopoly\kosmopoly\kosmopoly.cpp(294): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
+c:\users\łukasz zieliński\desktop\studia\programowanie 2\kosmopoly\kosmopoly\kosmopoly.cpp(288): warning C4101: "wolne": lokalna zmienna, do której nie istnieje odwołanie
+  Pole.cpp
+  Pozycja.cpp
+  gracz.cpp
+  kosci.cpp
+  Generowanie kodu...
+  Kosmopoly.vcxproj -> C:\Users\Łukasz Zieliński\Desktop\studia\programowanie 2\Kosmopoly\Debug\Kosmopoly.exe

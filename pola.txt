@@ -1,0 +1,160 @@
+Port kosmiczny Start
+3
+2000
+brak
+Sputnik
+1
+600
+czerwony
+Kasa Intergalaktyczna
+2
+0
+brak
+Ksiezyc
+1
+600
+czerwony
+Podatek od statku kosmicznego
+3
+2000
+brak
+Kolejka miedzyplanetarna
+1
+2000
+bialy
+Kolonia Marsa
+1
+1000
+pomaranczowy
+Loteria planetarna
+2
+0
+brak
+Explorer
+1
+1000
+pomaranczowy
+Goracy Merkury
+1
+1200
+pomaranczowy
+Wiezienie kosmiczne
+3
+0
+brak
+Galaktyczny bar mleczny 
+1
+1400
+zolty
+Elektorwnia gwiezdna
+1
+1500
+czarny
+Gazwonia Jowisz
+1
+1400
+zolty
+Osiedle komet przyjazni
+1
+1600
+zolty
+Kapsula podroznicza
+1
+2000
+bialy
+Muzeum ksiezycow Saturna
+1
+1800
+zielony
+Kasa Intergalaktyczna
+2
+0
+brak
+Zajazd Kosmiczna gospoda
+1
+1800
+zielony
+Zaklad jubilerski Pierscien Saturna
+1
+2000
+zielony
+Parking statkow kosmicznych
+3
+0
+brak
+Siedziba kosmonautow uciekinierow
+1
+2200
+niebieski
+Loteria planetarna
+2
+0
+brak
+Kopalnia Uran
+1
+2200
+niebieski
+Labirynt Meteoroid
+1
+2400
+niebieski
+Czarna dziura
+1
+2000
+bialy
+Restauracja kosmiczne marzenie
+1
+2600
+fioletowy
+Wolne miasto Pluton
+1
+2600
+fioletowy
+Miedzygalaktyczna elektrownia prozniowa
+1
+1500
+czarny
+Park wodny Neptun
+1
+2800
+fioletowy
+Patrol policji kosmicznej
+3
+0
+brak
+Most miedzygalaktyczny
+1
+3000
+rozowy
+Galaktyka Andromedy
+1
+3000
+rozowy
+Kasa Intergalaktyczna
+2
+0
+brak
+Miêdzygalaktyczne centrum handlowe
+1
+3200
+rozowy
+Teleport
+1
+2000
+bialy
+Loteria planetarna
+2
+0
+brak
+Kino Gromad Abella
+1
+3500
+zloty
+Podatek kosmiczny
+3
+1000
+brak
+Supergromada Laniakea
+1
+4000
+zloty
