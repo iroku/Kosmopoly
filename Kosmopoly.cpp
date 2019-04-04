@@ -54,7 +54,7 @@ void przydziel_pola(Pole *&objekt)
 	}
 }
 
-void ruch(gracz &name, kosci a, kosci b)
+void ruch(gracz &name, const kosci a, const kosci b)
 {
 	name.pozycja = (name.pozycja+(a.ilosc_oczek + b.ilosc_oczek)) % 40;
 }
@@ -144,7 +144,7 @@ void wyswietl_plansze(const gracz *kto, Pozycja *&p,const int ile_sprawdzic)
 	delete[] p;
 }
 
-Pole sprawdz_pozycje(gracz kto, Pole *&gdzie)
+Pole sprawdz_pozycje(const gracz kto,const Pole *gdzie)
 {
 	for (int i = 0; i < 40; i++)
 	{

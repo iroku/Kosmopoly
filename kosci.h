@@ -14,6 +14,6 @@ public:
 	void rzut();
 	bool sprawdz_dublet(kosci, kosci);
 	int zwroc() const;
-	friend void ruch(gracz &name, kosci a, kosci b);
+	friend void ruch(gracz &name, const kosci a, const kosci b);
 };
 

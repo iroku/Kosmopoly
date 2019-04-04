@@ -24,7 +24,7 @@ public:
 	void wyswietl();
 	void ustaw(int);
 	void kup(gracz &kto, Pole *ktore);
-	friend Pole sprawdz_pozycje(gracz kto, Pole *&gdzie);
+	friend Pole sprawdz_pozycje(const gracz kto, const Pole *gdzie);
 	friend void wyswietl_pole(const Pole ktore, const gracz &kto);
 	friend void wyswietl_pole(const Pole ktore);
 };

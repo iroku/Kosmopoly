@@ -24,12 +24,12 @@ gracz::~gracz()
 {
 }
 
-void gracz::nazwij(string n)
+void gracz::nazwij(string n) const
 {
 	nazwa = n;
 }
 
-bool gracz::sprawdz(gracz *objekt, string n, int ilosc)
+bool gracz::sprawdz(const gracz *objekt, const string n, const int ilosc)
 {
 	for (int i = ilosc-1; i >= 0; i--)
 	{

@@ -13,7 +13,7 @@ class Pole;
 
 class gracz
 {
-	string nazwa;
+	mutable string nazwa;
 	int kasa;
 	int pozycja;
 	int nr_gracza;
@@ -22,14 +22,14 @@ public:
 	gracz();
 	gracz(string, int, int = 15000, int = 0);
 	~gracz();
-	void nazwij(string n);
-	bool sprawdz(gracz *objekt, string n, int ilosc);
+	void nazwij(string n) const;
+	bool sprawdz(const gracz *objekt, const string n, const int ilosc);
 	string zwroc() const;
 	void wyswietl_info() const;
-	friend void ruch(gracz &name, kosci a, kosci b);
+	friend void ruch(gracz &name, const kosci a, const kosci b);
 	friend void wyswietl_plansze(const gracz *kto, Pozycja *&p,const int ile_sprawdzic);
 	friend void kup(gracz **&kto, Pole *ktore);
-	friend Pole sprawdz_pozycje(gracz kto, Pole *&gdzie);
+	friend Pole sprawdz_pozycje(const gracz kto, const Pole *gdzie);
 	friend void wyswietl_pole(const Pole ktore, const gracz &kto);
 };
 
