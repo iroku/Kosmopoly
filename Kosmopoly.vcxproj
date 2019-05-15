@@ -155,7 +155,6 @@
     <ClInclude Include="kosci.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Pole.h" />
-    <ClInclude Include="Pozycja.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -169,7 +168,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Pole.cpp" />
-    <ClCompile Include="Pozycja.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Kosmopoly.rc" />

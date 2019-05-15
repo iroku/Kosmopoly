@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "Pole.h"
+#include "gracz.h"
 #include <string>
 #include <fstream>
-#include "gracz.h"
+#include <assert.h>
 
 using namespace std;
 
@@ -34,6 +35,21 @@ Pole::Pole(int nr, int d, int h, string w)
 		aktualny_numer++;
 	}
 	plik.close();
+	switch (typ)
+	{
+	case 1:
+		ilosc_nieruchomosci++;
+		break;
+	case 2:
+		ilosc_kart++;
+		break;
+	case 3:
+		ilosc_akcji++;
+		break;
+	default:
+		assert(!"kod nie powinien tu dojsc");
+		system("pause");
+	}
 }
 
 void Pole::ustaw(int n)
@@ -50,7 +66,22 @@ Pole::~Pole()
 {
 }
 
-void Pole::kup(gracz &kto, Pole *ktore)
+int Pole::zwroc_typ() const
 {
+	return typ;
+}
 
+string Pole::zwroc_kolor() const
+{
+	return kolor;
+}
+
+void Pole::kopiuj(const Pole &pole)
+{
+	nr_pozycji = pole.nr_pozycji;
+	nazwa = pole.nazwa;
+	typ = pole.typ;
+	cena = pole.cena;
+	kolor = pole.kolor;
+	wlasciciel = pole.wlasciciel;
 }

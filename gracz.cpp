@@ -11,14 +11,13 @@ gracz::gracz():nr_gracza(0)
 
 }
 
-gracz::gracz(string n, int nr, int k, int p)
+gracz::gracz(string n, int nr, int p)
 {
 	nazwij(n);
-	this->nr_gracza = nr;
-	this->kasa = k;
-	this->pozycja = p;
+	nr_gracza = nr;
+	pozycja = p;
+	saldo = Saldo();
 }
-
 
 gracz::~gracz()
 {
@@ -48,10 +47,30 @@ string gracz::zwroc() const
 	return nazwa;
 }
 
+void gracz::Saldo::zwroc_saldo() const
+{
+	cout << "Twoje saldo jest równe: " << pieniadze + wartosc_pol + wartosc_nieruchomosci << "kosmo$$.";
+}
+
+void gracz::Saldo::zwroc_pieniadze() const
+{
+	cout << "Posiadasz " << pieniadze << "kosmo$$.";
+}
+
+void gracz::zwroc_saldo() const
+{
+	saldo.zwroc_saldo();
+}
+
+void gracz::zwroc_pieniadze() const
+{
+	saldo.zwroc_pieniadze();
+}
+
 void gracz::wyswietl_info() const
 {
 	setCursor(115, 2);
 	cout << "Tura gracza " << nazwa << ".";
 	setCursor(115, 3);
-	cout << "Posiadasz " << kasa << " kosmo$$.";
+	zwroc_pieniadze();
 }

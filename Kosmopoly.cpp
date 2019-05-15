@@ -1,13 +1,13 @@
 ﻿#include "pch.h"
 #include "gracz.h"
 #include "kosci.h"
-#include "Pozycja.h"
 #include "Pole.h"
 #include <windows.h>
 #include <time.h>
 #include <random>
 #include <string>
 #include <iostream>
+#include <assert.h>
 
 using namespace std;
 
@@ -18,33 +18,38 @@ void setCursor(const int x, const int y)
 	c.Y = y - 1;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
 }
-
-void utworz_graczy(gracz *&objekt, int &ilosc)
+namespace utworz
 {
-	string nazwa;
-	ilosc = 2;
-	bool unikalnosc_nazwy;
-	cout << "Wybierz ilosc graczy (min 2, max 6): ";
-	do
+	void utworz_graczy(gracz *&objekt, int &ilosc)
 	{
-		cin >> ilosc;
-		if (ilosc < 2 || ilosc > 6) cout << "Podano zla ilosc graczy, minimalna ilosc to 2 a, maksymalna to 6.\nWybierz ponownie ilosc:";
-	} while (ilosc < 2 || ilosc > 6);
-	objekt = new gracz[ilosc];
-	for (int i = 0; i < ilosc; i++)
-	{
-		unikalnosc_nazwy = true;
-		while (unikalnosc_nazwy == true)
+		string nazwa;
+		ilosc = 2;
+		bool unikalnosc_nazwy;
+		cout << "Wybierz ilosc graczy (min 2, max 6): ";
+		do
 		{
-			cout << "Podaj nazwe " << i + 1 << "-ego gracza: ";
-			cin >> nazwa;
-			unikalnosc_nazwy = objekt[i].sprawdz(objekt, nazwa, i);
+			cin >> ilosc;
+			if (ilosc < 2 || ilosc > 6) cout << "Podano zla ilosc graczy, minimalna ilosc to 2 a, maksymalna to 6.\nWybierz ponownie ilosc:";
+		} while (ilosc < 2 || ilosc > 6);
+		objekt = new gracz[ilosc];
+		for (int i = 0; i < ilosc; i++)
+		{
+			unikalnosc_nazwy = true;
+			while (unikalnosc_nazwy == true)
+			{
+				cout << "Podaj nazwe " << i + 1 << "-ego gracza: ";
+				cin >> nazwa;
+				unikalnosc_nazwy = objekt[i].sprawdz(objekt, nazwa, i);
+			}
+			objekt[i] = gracz(nazwa, i + 1);
 		}
-		objekt[i] = gracz(nazwa, i+1);
-	}
-	
-}
 
+	}
+}
+namespace wczytaj
+{
+
+}
 void przydziel_pola(Pole *&objekt)
 {
 	objekt = new Pole[40];
@@ -59,13 +64,11 @@ void ruch(gracz &name, const kosci a, const kosci b)
 	name.pozycja = (name.pozycja+(a.ilosc_oczek + b.ilosc_oczek)) % 40;
 }
 
-void wyswietl_plansze(const gracz *kto, Pozycja *&p,const int ile_sprawdzic)
+void wyswietl_plansze(const gracz *kto, Pole *&p,const int ile_sprawdzic)
 {
-	p = new Pozycja[40];
 	string g[6];
 	for (int j = 0; j < 40; j++)
 	{
-		p[j] = Pozycja(j);
 		for (int k = 0; k < 6; k++)
 		{
 			g[k] = " ";
@@ -141,10 +144,9 @@ void wyswietl_plansze(const gracz *kto, Pozycja *&p,const int ile_sprawdzic)
 	setCursor(32, 24);
 	cout << "| \\ |___| ___| |    | |___| |     |___| |____ |  ";
 	setCursor(1, 46);
-	delete[] p;
 }
 
-Pole sprawdz_pozycje(const gracz kto,const Pole *gdzie)
+Pole sprawdz_pozycje(const gracz kto, const Pole *gdzie)
 {
 	for (int i = 0; i < 40; i++)
 	{
@@ -164,6 +166,7 @@ void wyswietl_pole(const Pole ktore)
 
 void wyswietl_pole(const Pole ktore, const gracz &kto)
 {
+	int wybor;
 	setCursor(115, 7);
 	cout << "Pole na ktorym stoisz to: " << ktore.nazwa;
 	if (ktore.typ == 1)
@@ -174,7 +177,23 @@ void wyswietl_pole(const Pole ktore, const gracz &kto)
 			cout << "Nikt jeszcze nie posiada tego pola wiec mozesz je kupic";
 			setCursor(115, 9);
 			cout << "Jego cena to: " << ktore.cena << "kosmo$$.";
+			setCursor(115, 10);
+			cout << "Wprowadz 1 - aby kupic pole.";
+			setCursor(115, 11);
+			cout << "Wprowadz 2 - aby przejsc dalej.";
+			setCursor(115, 12);
+			cout << "Twoj wybor:";
+			cin >> wybor;
+			switch (wybor)
+			{
+			case 1:
+				break;
+			case 2:
 
+				break;
+			default:
+				;
+			}
 
 		}
 		else
@@ -193,23 +212,23 @@ void wyswietl_pole(const Pole ktore, const gracz &kto)
 	}
 }
 
-void stworz(Pole ***&pole, const int rozmiar)
+/*void stworz(Pole ***&pole, const int rozmiar, const int *rozmiar_kol)
 {
 	pole = new Pole**[rozmiar];
 	for (int i = 0; i < rozmiar; i++)
 	{
-		pole[i] = new Pole*[rozmiar];
-		for (int j = 0; j < rozmiar; j++) pole[i][j] = new Pole;
+		pole[i] = new Pole*[rozmiar_kol[i]];
+		for (int j = 0; j < rozmiar_kol[i]; j++) pole[i][j] = new Pole;
 	}
 }
 
-void dodaj(Pole ***&pole, int &rozmiar)
+void dodaj(Pole ***&pole, int &rozmiar, int *&rozmiar_kol, int ktory)
 {
 
-	Pole ***b = new Pole**[rozmiar + 1];
-	for (int i = 0; i < rozmiar + 1; i++)
+	Pole ***b = new Pole**[rozmiar];
+	for (int i = 0; i < rozmiar; i++)
 	{
-		b[i] = new Pole*[rozmiar + 1];
+		b[i] = new Pole*[rozmiar_kol[i] + 1];
 		for (int j = 0; j < rozmiar + 1; j++)
 		{
 			b[i][j] = new Pole;
@@ -248,10 +267,28 @@ void kasuj(Pole ***&pole, int &rozmiar)
 	else cout << "Tablica zostala usunieta." << endl;
 }
 
-void zainicjuj(Pole *const*const*const pole, const int rozmiar)
+void zainicjuj(Pole *const*const*const pole, Pole *const pola, const int rozmiar, const int *rozmiar_kol)
 {
-	for (int i = 0; i < rozmiar; i++)
-		for (int j = 0; j < rozmiar; j++) pole[i][j]->ustaw(i);
+	for (int k = 0; k < 40; k++) 
+	{
+		if (pola[k].zwroc_typ() == 2)
+		{
+			for (int l = 0; l < rozmiar; l++)
+			{
+				for (int i = 0; i < rozmiar; i++)
+				{
+					if (pole[i][0]->zwroc_kolor() == pola[k].zwroc_kolor())
+					{
+					
+					}
+					else
+					{
+						pole[l][0]->kopiuj(pola[k]);
+					}
+				}
+			}
+		}
+	}
 }
 
 void pokaz(Pole *const*const*const pole, const int rozmiar)
@@ -278,15 +315,135 @@ void usun(Pole ***&pole, int rozmiar)
 	delete[] pole;
 	pole = nullptr;
 }
+*/
+
+void stworz(Pole **&pole, const int rozmiar)
+{
+	pole = new Pole*[rozmiar];
+	for (int i = 0; i < rozmiar; i++)
+	{
+		pole[i] = new Pole;
+	}
+}
+
+void zainicjuj(Pole *const*const & pole, Pole *const pola, const int rozmiar)
+{
+	int i = 0;
+	for (int k = 0; k < 40; k++)
+	{
+			if (pola[k].zwroc_typ() == 1)
+			{
+				pole[i]->kopiuj(pola[k]);
+				i++;
+			}
+	}
+}
+
+void zamien(Pole **&pole, int ktore, const int rozmiar)
+{
+	Pole *p;
+	for (int i = 0; i < rozmiar - 1; i++)
+	{
+
+		if (i >= ktore)
+		{
+			p = pole[i];
+			pole[i] = pole[i + 1];
+			pole[i + 1] = p;
+		}
+	}
+}
+
+void kasuj(Pole **&pole, int &rozmiar)
+{
+	if (rozmiar > 0)
+	{
+		Pole **b = new Pole*[rozmiar - 1];
+		for (int i = 0; i < rozmiar - 1; i++)
+		{
+			b[i] = new Pole;
+			b[i] = pole[i];
+		}
+		delete[] pole;
+		pole = b;
+		rozmiar--;
+	}
+	else cout << "Tablica zostala usunieta." << endl;
+}
+
+void pokaz(Pole *const*const pole, const int rozmiar)
+{
+	setCursor(2, 47);
+	cout << "Wolne pola:" << endl;
+	for (int i = 0; i < rozmiar; i++)
+	{
+		cout << *pole[i] << endl;
+	}
+}
+
+void kup(gracz &kto, Pole **&wolne, int &rozmiar)
+{
+	zamien(wolne, 5, rozmiar);
+	kasuj(wolne, rozmiar);
+}
+
+short Pole::ilosc_nieruchomosci = 0;
+short Pole::ilosc_kart = 0;
+short Pole::ilosc_akcji = 0;
+
+ostream& operator << (ostream& out, Pole& p) 
+{
+	out << p.nazwa << endl;
+	out << p.cena << "kosmo$$" << endl;
+	out << p.kolor << endl;
+	return out;
+}
+
+istream& operator >> (istream& in, Pole& p)
+{
+	in >> p.nazwa;
+	in >> p.cena;
+	in >> p.kolor;
+	return in;
+}
+
+bool Pole::operator != (const Pole& p) const
+{
+	if (nazwa != p.nazwa) return true;
+	return false;
+}
+
+Pole& Pole::operator = (const Pole& p)
+{
+	if (&p != this)
+	{
+		nr_pozycji = p.nr_pozycji;
+		nazwa = p.nazwa;
+		typ = p.typ;
+		cena = p.cena;
+		kolor = p.kolor;
+	}
+	return *this;
+}
+
+Pole& Pole::operator [] (int index)
+{
+	assert(0 <= index && index < Pole::zwroc_sume_pol());
+	for (int i = 0; i < Pole::zwroc_sume_pol(); i++)
+	{
+		if (nr_pozycji == i) return *this;
+	}
+}
 
 int main()
 {
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
 	gracz *gracze;
 	kosci kosc1, kosc2;
-	Pozycja *plansza;
-	Pole *pola, ***wolne;
-	int rozmiar = 6;
+	Pole *pola, **wolne;
+
+	int rozmiar = 28;
+	// int rozmiar_kol[10]{ 1 };
 	int wybor;
 	int ilosc_graczy;
 	bool petla_programu = true;
@@ -299,8 +456,10 @@ int main()
 		switch (wybor)
 		{
 		case 1:
-			utworz_graczy(gracze, ilosc_graczy);
+			utworz::utworz_graczy(gracze, ilosc_graczy);
 			przydziel_pola(pola);
+			stworz(wolne, rozmiar);
+			zainicjuj(wolne, pola, rozmiar);
 			cin.clear();
 			cin.ignore(1, '\n');
 			while (warunek_zwyciestwa == false)
@@ -308,7 +467,8 @@ int main()
 			for (int i = 0; i < ilosc_graczy; i++)
 			{
 				system("cls");
-				wyswietl_plansze(gracze, plansza, ilosc_graczy);
+				wyswietl_plansze(gracze, pola, ilosc_graczy);
+				pokaz(wolne, rozmiar);
 				gracze[i].wyswietl_info();
 				wyswietl_pole(sprawdz_pozycje(gracze[i], pola));
 				setCursor(115, 5);
@@ -318,19 +478,34 @@ int main()
 				kosc2.rzut();
 				ruch(gracze[i], kosc1, kosc2);
 				system("cls");
-				wyswietl_plansze(gracze, plansza, ilosc_graczy);
+				wyswietl_plansze(gracze, pola, ilosc_graczy);
+				pokaz(wolne, rozmiar);
 				gracze[i].wyswietl_info();
 				setCursor(115, 5);
 				cout << "Wyrzucona ilosc oczek to " << kosc1.zwroc() << " i " << kosc2.zwroc() << ".";
 				wyswietl_pole(sprawdz_pozycje(gracze[i], pola), gracze[i]);
-				setCursor(115, 11);
+				setCursor(115, 14);
+				cout << "Wprowadz 1 - aby wyswietlic posiadane pola.";
+				setCursor(115, 15);
+				cout << "Wprowadz 2 - aby zakonczyc ture.";
+				setCursor(115, 16);
+				cout << "Twoj wybor:";
+				cin >> wybor;
+				switch (wybor)
+				{
+				case 1:
+					break;
+				case 2:
+					break;
+				default:
+					;
+				}
 			}
 			}
 			system("pause");
 			return 0;
 			break;
 		case 2:
-
 			break;
 		case 3:
 			petla_programu = false;
